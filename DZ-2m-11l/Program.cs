@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 
@@ -29,11 +28,11 @@ namespace DZ_2m_11l
             s = new Stack("a", "b", "c");
             s.Merge(new Stack("1", "2", "3"));
             Stack.Print(s);
-            s.Concat(new Stack("a", "b", "c"), new Stack("1", "2", "3"), new Stack("А", "Б", "В"));
+            s = Stack.Concat(new Stack("a", "b", "c"), new Stack("1", "2", "3"), new Stack("А", "Б", "В"));
             Stack.Print(s);
         }
         //Класс коллекция
-      public class Stack
+        public class Stack
         {
             public List<string> stack = new List<string>();
 
@@ -47,14 +46,24 @@ namespace DZ_2m_11l
             }
             //Методы
 
-            
+            public static Stack Concat(params Stack[] inputs)
+            {
+                var a = new Stack();
+                for (int i = 0; i < inputs.Length; i++)
+                {
+                    a.Merge(inputs[i]);
+                }
+                return a;
+            }
+
+
             public void Add(string a)
             {
                 stack.Add(a);
             }
             public string Pop()
             {
-                
+
                 if (stack.Count != 0)
                 {
                     var a = stack[stack.Count - 1];
@@ -108,7 +117,7 @@ namespace DZ_2m_11l
         }
     }
 
-    
+
 
     //Расширение класса.
     public static class StackEtensions
@@ -123,16 +132,5 @@ namespace DZ_2m_11l
                 a.stack.RemoveAt(a.stack.Count - 1);
             }
         }
-
-        public static void Concat(this Program.Stack stack, params Program.Stack[] inputs)
-        {
-            stack.stack.Clear();
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                stack.Merge(inputs[i]);
-            }
-        }
-        
-
-}
+    }
 }
